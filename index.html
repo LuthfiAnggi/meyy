@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        
+        /* Custom Cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ff6b9d, #c44569);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor.knife {
+            width: 40px;
+            height: 40px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="silver"><path d="M12 2l10 10-10 10L2 12z"/></svg>') no-repeat center;
+            background-size: contain;
+            border-radius: 0;
+        }
+        
+        /* Glassmorphism Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-item {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+        
+        .nav-item:hover {
+            color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.1);
+        }
+        
+        /* Audio Controls */
+        .audio-controls {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 107, 157, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .voice-message {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Hero Section with 3D Effect */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 157, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(196, 69, 105, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 182, 193, 0.2) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc, #ff6b9d);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.4);
+        }
+        
+        /* Cake Cutting Section */
+        .cake-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #2c1810 0%, #8b4513 50%, #2c1810 100%);
+            position: relative;
+            padding: 2rem;
+        }
+        
+        .cake-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .birthday-cake {
+            font-size: 15rem;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cake-slice {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 15rem;
+            opacity: 0;
+            transform: rotate(0deg) scale(1);
+            transition: all 0.8s ease;
+            pointer-events: none;
+        }
+        
+        .cake-slice.cut {
+            opacity: 1;
+            transform: rotate(25deg) scale(0.8) translateX(100px);
+        }
+        
+        .cutting-instruction {
+            font-size: 1.5rem;
+            color: #ffcc80;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .cake-cut-count {
+            font-size: 1.2rem;
+            color: #ff6b9d;
+            margin-top: 1rem;
+        }
+        
+        /* Memory Gallery with Cards */
+        .gallery-section {
+            min-height: 100vh;
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ff6b9d, #ffa8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .memory-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .memory-card:hover::before {
+            left: 100%;
+        }
+        
+        .memory-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(255, 107, 157, 0.2);
+            border-color: rgba(255, 107, 157, 0.3);
+        }
+        
+        .memory-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #8e44ad);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .memory-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer-slow 4s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer-slow {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+        
+        .memory-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #ff6b9d;
+            margin-bottom: 1rem;
+        }
+        
+        .memory-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        /* Love Message Section */
+        .message-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, #4a148c 0%, #6a1b9a 50%, #1a1a2e 100%);
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .message-container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 107, 157, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .message-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .message-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: #ff6b9d;
+        }
+        
+        .love-message-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+        
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 1rem;
+            opacity: 0.7;
+            animation: particle-float 8s infinite linear;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-bar {
+                padding: 0.5rem 1rem;
+                gap: 1rem;
+            }
+            
+            .audio-controls {
+                top: 1rem;
+                right: 1rem;
+                gap: 0.5rem;
+            }
+            
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .birthday-cake,
+            .cake-slice {
+                font-size: 10rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .memory-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .message-container {
+                padding: 2rem;
+            }
+            
+            .message-title {
+                font-size: 2rem;
+            }
+            
+            .love-message-text {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        section {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <a href="#hero" class="nav-item">Home</a>
+        <a href="#cake" class="nav-item">Kue</a>
+        <a href="#gallery" class="nav-item">Kenangan</a>
+        <a href="#message" class="nav-item">Pesan</a>
+    </nav>
+    
+    <!-- Audio Controls -->
+    <div class="audio-controls">
+        <button class="control-btn" id="musicBtn" title="Play/Pause Music">
+            🎵
+        </button>
+        <button class="control-btn voice-message" id="voiceBtn" title="Voice Message">
+            🎤
+        </button>
+    </div>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Happy Birthday</h1>
+            <p class="hero-subtitle">Untuk orang tersayang yang membuat hidup ini bermakna</p>
+            <button class="cta-button" onclick="document.getElementById('cake').scrollIntoView()">
+                Mulai Perayaan ✨
+            </button>
+        </div>
+    </section>
+    
+    <!-- Cake Cutting Section -->
+    <section id="cake" class="cake-section">
+        <h2 class="section-title">Potong Kue Bersama</h2>
+        <p class="cutting-instruction">Hover mouse di atas kue untuk memotongnya! 🔪</p>
+        <div class="cake-container" id="cakeContainer">
+            <div class="birthday-cake" id="cake-main">🎂</div>
+            <div class="cake-slice" id="cake-slice">🍰</div>
+        </div>
+        <div class="cake-cut-count" id="cutCount">Potongan kue: 0</div>
+    </section>
+    
+    <!-- Memory Gallery -->
+    <section id="gallery" class="gallery-section">
+        <h2 class="section-title">Kenangan Terindah</h2>
+        <div class="memory-grid">
+            <div class="memory-card">
+                <div class="memory-image">📸</div>
+                <h3 class="memory-title">Pertemuan Pertama</h3>
+                <p class="memory-text">Moment ketika mata kita bertemu untuk pertama kali. Waktu seakan berhenti dan aku tahu hidup akan berubah.</p>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">💕</div>
+                <h3 class="memory-title">Kencan Pertama</h3>
+                <p class="memory-text">Nervous tapi bahagia. Kita berjalan di taman, tertawa bersama, dan aku jatuh cinta pada senyumanmu.</p>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">🌅</div>
+                <h3 class="memory-title">Liburan Berdua</h3>
+                <p class="memory-text">Petualangan pertama kita bersama. Melihat sunrise, foto candid, dan janji untuk selalu bersama.</p>
+            </div>
+            <div class="memory-card">
+                <div class="memory-image">🎭</div>
+                <h3 class="memory-title">Momen Spontan</h3>
+                <p class="memory-text">Tawa lepas di tengah hujan, dance konyol di dapur, semua moment kecil yang jadi kenangan besar.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Love Message -->
+    <section id="message" class="message-section">
+        <div class="message-container">
+            <div class="message-content">
+                <h2 class="message-title">Untuk Cintaku</h2>
+                <p class="love-message-text">
+                    Di hari istimewa ini, aku ingin kamu tahu betapa berharganya kehadiranmu dalam hidupku. 
+                    Setiap hari bersamamu adalah anugerah, setiap senyuman yang kau berikan adalah kebahagiaan, 
+                    dan setiap pelukan darimu adalah rumah bagiku.
+                </p>
+                <p class="love-message-text">
+                    Semoga tahun baru dalam hidupmu dipenuhi dengan cinta, tawa, kebahagiaan, dan semua hal 
+                    indah yang kamu impikan. Aku berjanji akan selalu ada di sisimu, dalam suka maupun duka.
+                </p>
+                <p class="love-message-text" style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: #ff6b9d;">
+                    I Love You Beyond Words 💕
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hidden Audio Elements -->
+    <audio id="backgroundMusic" loop>
+        <source src="Happy_Birthday!.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="voiceMessage">
+        <source src="Voice_Note.mp3" type="audio/mpeg">
+        <!-- Upload file voice message kalian -->
+    </audio>
+    
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        const cakeContainer = document.getElementById('cakeContainer');
+        let isOverCake = false;
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Cursor change over cake
+        cakeContainer.addEventListener('mouseenter', () => {
+            cursor.classList.add('knife');
+            isOverCake = true;
+        });
+        
+        cakeContainer.addEventListener('mouseleave', () => {
+            cursor.classList.remove('knife');
+            isOverCake = false;
+        });
+        
+        // Cake Cutting Feature
+        let cutCount = 0;
+        const cakeMain = document.getElementById('cake-main');
+        const cakeSlice = document.getElementById('cake-slice');
+        const cutCountDisplay = document.getElementById('cutCount');
+        
+        cakeContainer.addEventListener('click', () => {
+            if (isOverCake) {
+                cutCount++;
+                cutCountDisplay.textContent = `Potongan kue: ${cutCount}`;
+                
+                // Animate cake cutting
+                cakeSlice.classList.add('cut');
+                cakeMain.style.transform = 'scale(0.9) rotate(-5deg)';
+                
+                // Create particles effect
+                createCakeParticles();
+                
+                // Reset animation after delay
+                setTimeout(() => {
+                    cakeSlice.classList.remove('cut');
+                    cakeMain.style.transform = 'scale(1) rotate(0deg)';
+                }, 1000);
+                
+                // Special message at certain cuts
+                if (cutCount === 5) {
+                    alert('🎉 Kue sudah dipotong! Saatnya makan bersama! 🍰');
+                }
+            }
+        });
+        
+        // Audio Controls
+        const musicBtn = document.getElementById('musicBtn');
+        const voiceBtn = document.getElementById('voiceBtn');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const voiceMessage = document.getElementById('voiceMessage');
+        
+        let isMusicPlaying = false;
+        
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicBtn.textContent = '🎵';
+                musicBtn.title = 'Play Music';
+            } else {
+                backgroundMusic.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                    alert('Silakan tambahkan file musik favorit kalian!');
+                });
+                musicBtn.textContent = '⏸️';
+                musicBtn.title = 'Pause Music';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+        
+        voiceBtn.addEventListener('click', () => {
+            if (voiceMessage.paused) {
+                voiceMessage.play().catch(e => {
+                    console.log('Voice message play failed:', e);
+                    alert('💕 "Selamat ulang tahun sayang! Aku mencintaimu lebih dari kata-kata bisa ungkapkan. Semoga hari ini dan hari-hari berikutnya dipenuhi kebahagiaan!" 💕');
+                });
+                voiceBtn.style.background = 'rgba(255, 107, 157, 0.5)';
+            } else {
+                voiceMessage.pause();
+                voiceMessage.currentTime = 0;
+                voiceBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+        
+        // Reset voice button when audio ends
+        voiceMessage.addEventListener('ended', () => {
+            voiceBtn.style.background = 'rgba(255, 255, 255, 0.1)';
+        });
+        
+        // Floating Particles
+        function createParticle() {
+            const particles = document.getElementById('particles');
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const symbols = ['💖', '💕', '✨', '🌟', '💫', '🎈', '🎊'];
+            particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            
+            particles.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 8000);
+        }
+        
+        // Create cake cutting particles
+        function createCakeParticles() {
+            const container = cakeContainer;
+            const rect = container.getBoundingClientRect();
+            
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.textContent = '✨';
+                particle.style.position = 'absolute';
+                particle.style.left = (rect.left + Math.random() * rect.width) + 'px';
+                particle.style.top = (rect.top + Math.random() * rect.height) + 'px';
+                particle.style.color = '#ffcc80';
+                particle.style.fontSize = '1.5rem';
+                particle.style.pointerEvents = 'none';
+                particle.style.zIndex = '1000';
+                particle.style.animation = 'particle-burst 1s ease-out forwards';
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1000);
+            }
+        }
+        
+        // Add particle burst animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particle-burst {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1.5) rotate(360deg) translateY(-50px);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Generate particles periodically
+        setInterval(createParticle, 1000);
+        
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(item.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Memory card interactions
+        document.querySelectorAll('.memory-card').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'translateY(-10px) rotateY(5deg) scale(1.02)';
+                setTimeout(() => {
+                    card.style.transform = 'translateY(-10px) rotateY(5deg)';
+                }, 200);
+            });
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auto-start background music after 2 seconds (if user interacted)
+            setTimeout(() => {
+                document.addEventListener('click', () => {
+                    if (!isMusicPlaying) {
+                        musicBtn.click();
+                    }
+                }, { once: true });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
